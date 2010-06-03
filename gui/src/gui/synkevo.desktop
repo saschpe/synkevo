@@ -1,0 +1,23 @@
+[Desktop Entry]
+Type=Application
+Icon=synkevo
+Exec=synkevo %i -caption "%c"
+Terminal=false
+Categories=Qt;KDE;
+
+Name=Synkevo
+Name[ca]=Synkevo
+Name[de]=Synkevo
+Name[en_GB]=Synkevo
+Name[eo]=Synkevo
+Name[es]=Synkevo
+Name[et]=Synkevo
+Name[pt]=Synkevo
+Name[sv]=Synkevo
+Name[tr]=Synkevo
+Name[uk]=Synkevo
+Name[x-test]=xxSynkevoxx
+Name[zh_TW]=Synkevo
+
+GenericName=KDE SyncEvolution Frontend
+GenericName[x-test]=xxKDE SyncEvolution Frontendxx

@@ -1,0 +1,12 @@
+# globs
+*~
+*.o
+*kdev4
+.*.swp
+
+# files
+config.h
+
+# directories
+build/
+dist/
