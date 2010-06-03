@@ -18,20 +18,19 @@
 
 include(LibFindMacros)
 
-find_path(SyncEvolution_INCLUDE_DIR
-    NAMES FOO
-    PATHS FOO
-)
+find_path(Synthesis_INCLUDE_DIR NAMES synthesis/sync_include.h)
+find_path(SyncevoDbus_INCLUDE_DIR NAMES syncevo-dbus/syncevo-dbus.h)
 
-find_library(SyncEvolution_LIBRARY
-    NAMES FOO
-    PATHS FOO
-)
+find_library(Synthesis_LIBRARY synthesis)
+find_library(Smltk_LIBRARY smltk)
+find_library(SyncevoDbus_LIBRARY syncevo-dbus)
 
 # Set the include dir variables and the libraries and let libfind_process do the rest.
 # NOTE: Singular variables for this library, plural for libraries this this lib depends on.
-set(SyncEvolution_PROCESS_INCLUDES SyncEvolution_INCLUDE_DIR SyncEvolution_INCLUDE_DIRS)
-set(SyncEvolution_PROCESS_LIBS SyncEvolution_LIBRARY SyncEvolution_LIBRARIES)
+set(SyncEvolution_PROCESS_INCLUDES Synthesis_INCLUDE_DIR SyncevoDbus_INCLUDE_DIR
+    SyncEvolution_INCLUDE_DIRS)
+set(SyncEvolution_PROCESS_LIBS Synthesis_LIBRARY Smltk_LIBRARY SyncevoDbus_LIBRARY
+    SyncEvolution_LIBRARIES)
 libfind_process(SyncEvolution)
 
 ## handle the QUIETLY and REQUIRED arguments and set SyncEvolution_FOUND to TRUE
