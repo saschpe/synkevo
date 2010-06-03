@@ -30,8 +30,8 @@ namespace Synkevo { /* This is only a Doxygen stub */ }
 int main(int argc, char *argv[])
 {
     KAboutData aboutData("synkevo", 0, ki18n("Synckevo"), "0.0.1",
-            ki18n("KDE SyncEvolution"), KAboutData::License_GPL_V3,
-            ki18n("Copyright (c) 2010 Sascha Peilicke"));
+                         ki18n("KDE SyncEvolution"), KAboutData::License_GPL_V3,
+                         ki18n("Copyright (c) 2010 Sascha Peilicke"));
     aboutData.addAuthor(ki18n("Sascha Peilicke (saschpe)"), ki18n("Original author"),
                         "sasch.pe@gmx.de", "http://saschpe.wordpress.com");
     KCmdLineArgs::init(argc, argv, &aboutData);
