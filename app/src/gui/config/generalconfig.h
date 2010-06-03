@@ -1,5 +1,5 @@
 /*
-    Copyright 2008 Sascha Peilicke <sasch.pe@gmx.de>
+    Copyright 2010 Sascha Peilicke <sasch.pe@gmx.de>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -18,36 +18,33 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KIGO_GENERALCONFIG_H
-#define KIGO_GENERALCONFIG_H
+#ifndef SYNKEVO_GENERALCONFIG_H
+#define SYNKEVO_GENERALCONFIG_H
 
 #include <ui_generalconfig.h>
 
 #include <QWidget>
 
-namespace Kigo {
+namespace Synkevo {
 
-/**
- * Represents the general configuration tab in the Kigo
- * configuration screen.
- *
- * @author Sascha Peilicke <sasch.pe@gmx.de>
- * @since 0.1
- */
-class GeneralConfig : public QWidget, private Ui::GeneralConfig
-{
-    Q_OBJECT
-
-public:
     /**
-     * Standard Constructor. Sets up the loaded user interface.
+     * Represents the general configuration tab in the Synkevo
+     * configuration screen.
+     *
+     * @author Sascha Peilicke <sasch.pe@gmx.de>
+     * @since 0.0.1
      */
-    GeneralConfig(QWidget *parent = 0);
+    class GeneralConfig : public QWidget, private Ui::GeneralConfig
+    {
+        Q_OBJECT
 
-private slots:
-    void updateEngineCommand();
-};
+    public:
+        /**
+         * Standard Constructor. Sets up the loaded user interface.
+         */
+        GeneralConfig(QWidget *parent = 0);
+    };
 
-} // End of namespace Kigo
+} // End of namespace Synkevo
 
 #endif

@@ -3,7 +3,7 @@
 set(synkevo_SRCS
     src/gui/config/generalconfig.cpp
     src/gui/mainwindow.cpp
-    src/main.cpp 
+    src/main.cpp
 )
 
 set(synkevo_UIS

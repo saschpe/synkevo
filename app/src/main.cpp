@@ -1,5 +1,5 @@
 /*
-    Copyright 2008 Sascha Peilicke <sasch.pe@gmx.de>
+    Copyright 2010 Sascha Peilicke <sasch.pe@gmx.de>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -25,6 +25,7 @@
 #include <KLocale>
 #include <KApplication>
 
+/// TODO.
 namespace Synkevo { /* This is only a Doxygen stub */ }
 
 int main(int argc, char *argv[])
