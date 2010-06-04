@@ -25,6 +25,11 @@ find_library(Synthesis_LIBRARY synthesis)
 find_library(Smltk_LIBRARY smltk)
 find_library(SyncevoDbus_LIBRARY syncevo-dbus)
 
+#TODO: Add dbus stuff
+#find_file(SyncEvolution_DBUS_SERVER_INTERFACE syncevo-server.xml)
+#find_file(SyncEvolution_DBUS_SESSION_INTERFACE syncevo-session.xml)
+#find_file(SyncEvolution_DBUS_CONNECTION_INTERFACE syncevo-connection.xml)
+
 # Set the include dir variables and the libraries and let libfind_process do the rest.
 # NOTE: Singular variables for this library, plural for libraries this this lib depends on.
 set(SyncEvolution_PROCESS_INCLUDES Synthesis_INCLUDE_DIR SyncevoDbus_INCLUDE_DIR

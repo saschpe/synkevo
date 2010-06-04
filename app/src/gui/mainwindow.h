@@ -21,6 +21,10 @@
 #ifndef SYNKEVO_MAINWINDOW_H
 #define SYNKEVO_MAINWINDOW_H
 
+#include "server_interface.h"
+#include "session_interface.h"
+#include "connection_interface.h"
+
 #include <KXmlGuiWindow>
 
 class KAction;
@@ -40,10 +44,12 @@ namespace Synkevo {
         void showPreferences();
 
     private:
+        bool init();
         void setupActions();
         void setupDockWindows();
 
         ProfileListWidget *m_profileListWidget;
+        org::syncevolution::Server *m_serverInterface;
     };
 
 } // End of namespace Synkevo

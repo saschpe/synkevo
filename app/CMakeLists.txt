@@ -12,6 +12,10 @@ set(synkevo_UIS
     src/gui/widgets/profilelistwidget.ui
 )
 
+qt4_add_dbus_interface(synkevo_SRCS ${SyncEvolution_DBUS_SERVER_INTERFACE} server_interface)
+qt4_add_dbus_interface(synkevo_SRCS ${SyncEvolution_DBUS_SESSION_INTERFACE} session_interface)
+qt4_add_dbus_interface(synkevo_SRCS ${SyncEvolution_DBUS_CONNECTION_INTERFACE} connection_interface)
+
 kde4_add_ui_files(synkevo_SRCS ${synkevo_UIS})
 kde4_add_kcfg_files(synkevo_SRCS src/preferences.kcfgc)
 kde4_add_app_icon(synkevo_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-synkevo.png")

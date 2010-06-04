@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/">
+  <interface name="org.syncevolution.Connection">
+    <method name="Process">
+      <arg type="ay" name="message" direction="in"/>
+      <arg type="s" name="message_type" direction="in"/>
+    </method>
+    <method name="Close">
+      <arg type="b" name="normal" direction="in"/>
+      <arg type="s" name="error" direction="in"/>
+    </method>
+    <signal name="Reply">
+      <arg type="ay" name="reply"/>
+      <arg type="s" name="reply_type"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In2" value="QMap<QString, QString>"/>
+      <arg type="a{ss}" name="meta"/>
+      <arg type="b" name="final"/>
+      <arg type="s" name="session"/>
+    </signal>
+    <signal name="Abort"/>
+  </interface>
+</node>

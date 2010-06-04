@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/">
+  <interface name="org.syncevolution.Session">
+    <method name="GetConfig">
+      <arg type="b" name="templates" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QMap<QString, QMap<String, QString> >"/>
+      <arg type="a{sa{ss}}" name="configuration" direction="out"/>
+    </method>
+    <method name="SetConfig">
+      <arg type="b" name="update" direction="in"/>
+      <arg type="b" name="temporary" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In2" value="QMap<QString, QMap<String, QString> >"/>
+      <arg type="a{sa{ss}}" name="configuration" direction="in"/>
+    </method>
+    <method name="GetReports">
+      <arg type="u" name="start" direction="in"/>
+      <arg type="u" name="count" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QList<QMap<QString, QString> >"/>
+      <arg type="aa{ss}" name="reports" direction="out"/>
+    </method>
+    <method name="GetDatabases">
+      <arg type="s" name="source" direction="in"/>
+      <arg type="a(ssb)" name="databases" direction="out"/>
+    </method>
+    <method name="CheckSource">
+      <arg type="s" name="source" direction="in"/>
+    </method>
+    <method name="Sync">
+      <arg type="s" name="mode" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In1" value="QMap<QString, QString>"/>
+      <arg type="a{ss}" name="sources" direction="in"/>
+    </method>
+    <method name="Abort"/>
+    <method name="Suspend"/>
+    <method name="Detach"/>
+    <method name="Restore">
+      <arg type="s" name="dir" direction="in"/>
+      <arg type="b" name="before" direction="in"/>
+      <arg type="as" name="sources" direction="in"/>
+    </method>
+    <method name="CheckPresence">
+      <arg type="s" name="status"/>
+    </method>
+    <method name="GetStatus">
+      <arg type="s" name="status" direction="out"/>
+      <arg type="u" name="error" direction="out"/>
+      <arg type="a{s(ssu)}" name="sources" direction="out"/>
+    </method>
+    <method name="GetProgress">
+      <arg type="i" name="progress" direction="out"/>
+      <arg type="a{s(siiiiii)}" name="sources" direction="out"/>
+    </method>
+    <method name="Execute">
+      <arg type="as" name="args" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In1" value="QMap<QString, QString>"/>
+      <arg type="a{ss}" name="vars" direction="in"/>
+    </method>
+    <signal name="StatusChanged">
+      <arg type="s" name="status"/>
+      <arg type="u" name="error"/>
+      <arg type="a{s(ssu)}" name="sources"/>
+    </signal>
+    <signal name="ProgressChanged">
+      <arg type="i" name="progress"/>
+      <arg type="a{s(siiiiii)}" name="sources"/>
+    </signal>
+  </interface>
+</node>

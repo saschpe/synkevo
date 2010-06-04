@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/">
+  <interface name="org.syncevolution.Server">
+    <method name="Attach"/>
+    <method name="Detach"/>
+    <method name="GetConfigs">
+      <arg type="b" name="templates" direction="in"/>
+      <arg type="as" name="servers" direction="out"/>
+    </method>
+    <method name="GetConfig">
+      <arg type="s" name="server" direction="in"/>
+      <arg type="b" name="templates" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QMap<QString, QMap<String, QString> >"/>
+      <arg type="a{sa{ss}}" name="configuration" direction="out"/>
+    </method>
+    <method name="CheckPresence">
+      <arg type="s" name="server" direction="in"/>
+      <arg type="s" name="status" direction="out"/>
+      <arg type="as" name="transports" direction="out"/>
+    </method>
+    <method name="GetReports">
+      <arg type="s" name="server" direction="in"/>
+      <arg type="u" name="start" direction="in"/>
+      <arg type="u" name="count" direction="in"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QList<QMap<QString, QString> >"/>
+      <arg type="aa{ss}" name="reports" direction="out"/>
+    </method>
+    <method name="GetDatabases">
+      <arg type="s" name="server" direction="in"/>
+      <arg type="s" name="source" direction="in"/>
+      <arg type="a(ssb)" name="databases" direction="out"/>
+    </method>
+    <method name="CheckSource">
+      <arg type="s" name="server" direction="in"/>
+      <arg type="s" name="source" direction="in"/>
+    </method>
+    <method name="StartSession">
+      <arg type="s" name="server" direction="in"/>
+      <arg type="o" name="session" direction="out"/>
+    </method>
+    <method name="Connect">
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QMap<QString, QString>"/>
+      <arg type="a{ss}" name="peer" direction="in"/>
+      <arg type="b" name="must_authenticate" direction="in"/>
+      <arg type="s" name="session" direction="in"/>
+      <arg type="o" name="connection" direction="out"/>
+    </method>
+    <method name="GetSessions">
+      <arg type="ao" name="sessions" direction="out"/>
+    </method>
+    <signal name="SessionChanged">
+      <arg type="o" name="session"/>
+      <arg type="b" name="started"/>
+    </signal>
+    <signal name="TemplatesChanged"/>
+    <signal name="Presence">
+      <arg type="s" name="server"/>
+      <arg type="s" name="status"/>
+      <arg type="s" name="transport"/>
+    </signal>
+    <signal name="InfoRequest">
+      <arg type="s" name="id"/>
+      <arg type="o" name="session"/>
+      <arg type="s" name="state"/>
+      <arg type="s" name="handler"/>
+      <arg type="s" name="type"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In5" value="QMap<QString, QString>"/>
+      <arg type="a{ss}" name="parameters"/>
+    </signal>
+    <method name="InfoResponse">
+      <arg type="s" name="id"/>
+      <arg type="s" name="state"/>
+      <annotation name="com.trolltech.QtDBus.QtTypeName.In2" value="QMap<QString, QString>"/>
+      <arg type="a{ss}" name="response"/>
+    </method>
+    <signal name="LogOutput">
+      <arg type="o" name="path"/>
+      <arg type="s" name="level"/>
+      <arg type="s" name="output"/>
+    </signal>
+  </interface>
+</node>
