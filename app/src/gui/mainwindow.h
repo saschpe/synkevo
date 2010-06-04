@@ -24,15 +24,11 @@
 #include <KXmlGuiWindow>
 
 class KAction;
-class KToggleAction;
-class QDockWidget;
 
 namespace Synkevo {
 
-    /**
-     * @author Sascha Peilicke <sasch.pe@gmx.de>
-     * @since 0.0.1
-     */
+    class ProfileListWidget;
+
     class MainWindow : public KXmlGuiWindow
     {
         Q_OBJECT
@@ -47,6 +43,7 @@ namespace Synkevo {
         void setupActions();
         void setupDockWindows();
 
+        ProfileListWidget *m_profileListWidget;
     };
 
 } // End of namespace Synkevo

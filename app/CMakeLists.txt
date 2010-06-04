@@ -2,12 +2,14 @@
 
 set(synkevo_SRCS
     src/gui/config/generalconfig.cpp
+    src/gui/widgets/profilelistwidget.cpp
     src/gui/mainwindow.cpp
     src/main.cpp
 )
 
 set(synkevo_UIS
     src/gui/config/generalconfig.ui
+    src/gui/widgets/profilelistwidget.ui
 )
 
 kde4_add_ui_files(synkevo_SRCS ${synkevo_UIS})

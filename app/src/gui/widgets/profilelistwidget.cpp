@@ -18,30 +18,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SYNKEVO_GENERALCONFIG_H
-#define SYNKEVO_GENERALCONFIG_H
+#include "profilelistwidget.h"
+#include "preferences.h"
 
-#include <ui_generalconfig.h>
-
-#include <QWidget>
+#include <KDebug>
+#include <KListWidget>
+#include <KPushButton>
 
 namespace Synkevo {
 
-    /**
-     * Represents the general configuration tab in the Synkevo
-     * configuration screen.
-     */
-    class GeneralConfig : public QWidget, private Ui::GeneralConfig
+    ProfileListWidget::ProfileListWidget(QWidget *parent)
+        : QWidget(parent)
     {
-        Q_OBJECT
-
-    public:
-        /**
-         * Standard Constructor. Sets up the loaded user interface.
-         */
-        GeneralConfig(QWidget *parent = 0);
-    };
+        setupUi(this);
+    }
 
 } // End of namespace Synkevo
 
-#endif
+#include "moc_profilelistwidget.cpp"

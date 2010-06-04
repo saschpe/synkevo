@@ -20,41 +20,27 @@
 
 #include "mainwindow.h"
 #include "config/generalconfig.h"
+#include "widgets/profilelistwidget.h"
 #include "preferences.h"
 
 #include <KAction>
 #include <KActionCollection>
 #include <KConfigDialog>
-#include <KFileDialog>
 #include <KStandardDirs>
-#include <KToggleAction>
-
-#include <QDockWidget>
-#include <QTimer>
-#include <QUndoView>
 
 namespace Synkevo {
 
     MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags)
         : KXmlGuiWindow(parent, flags)
+        , m_profileListWidget(new ProfileListWidget(this))
     {
-        //setCentralWidget(m_gameView);
+        setCentralWidget(m_profileListWidget);
 
         setupActions();
         setupDockWindows();
-        setupGUI(QSize(800, 700), KXmlGuiWindow::ToolBar | KXmlGuiWindow::Keys |
+        setupGUI(QSize(640, 480), KXmlGuiWindow::ToolBar | KXmlGuiWindow::Keys |
                                   KXmlGuiWindow::Save | KXmlGuiWindow::Create);
-
-        /*if (isBackendWorking()) {
-            // TODO
-        } else {
-            backendError();
-        } */
     }
-
-    /*void MainWindow::backendError()
-    {
-    }*/
 
     void MainWindow::showPreferences()
     {
@@ -69,11 +55,18 @@ namespace Synkevo {
 
     void MainWindow::setupActions()
     {
+        // File menu
+        KStandardAction::quit(this, SLOT(close()), actionCollection());
+
+        // Edit menu
+
+
+        // Settings menu
+        KStandardAction::preferences(this, SLOT(showPreferences()), actionCollection());
     }
 
     void MainWindow::setupDockWindows()
     {
-
     }
 
 } // End of namespace Synkevo
