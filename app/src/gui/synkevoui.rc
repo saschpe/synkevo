@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="synkevo" version="2">
+<gui name="synkevo" version="4">
     <MenuBar>
         <Menu name="file">
             <text context="@title:menu">&amp;File</text>
@@ -18,8 +18,8 @@
         </Menu>
         <Menu name="settings">
             <text context="@title:menu">&amp;Settings</text>
-            <Menu name="dockers" append="show_merge">
-                <text context="@title:menu">&amp;Docks Shown</text>
+            <Menu name="dock_widgets" append="show_merge">
+                <text context="@title:menu">&amp;Dock Widgets Shown</text>
                 <Action name="show_profile_dock"/>
             </Menu>
         </Menu>
