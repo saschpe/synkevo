@@ -20,26 +20,31 @@
 
 #include "mainwindow.h"
 #include "config/generalconfig.h"
-#include "widgets/profilelistwidget.h"
+#include "widgets/profilewidget.h"
 #include "widgets/stateoverlay.h"
 #include "preferences.h"
 
 #include <KAction>
 #include <KActionCollection>
 #include <KConfigDialog>
+#include <KDebug>
 #include <KStandardDirs>
+
+#include <QDockWidget>
+#include <QTableView>
 
 namespace Synkevo {
 
     MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags)
         : KXmlGuiWindow(parent, flags)
-        , m_profileListWidget(new ProfileListWidget(this))
-        , m_stateOverlay(new StateOverlay(m_profileListWidget, this))
+        , m_view(new QTableView)
+        , m_stateOverlay(new StateOverlay(m_view, this))
     {
-        setCentralWidget(m_profileListWidget);
+        setCentralWidget(m_view);
 
         setupActions();
-        setupDockWindows();
+        setupDockWidgets();
+        setupGUI();
 
         initBackend();
     }
@@ -62,7 +67,8 @@ namespace Synkevo {
                                                   "/org/syncevolution/Server",
                                                   QDBusConnection::sessionBus(),
                                                   this);
-        m_stateOverlay->setActive(!m_server);
+        //m_stateOverlay->setActive(!m_server);
+        m_stateOverlay->setActive(true);
         m_stateOverlay->setState(StateOverlay::NotRunning);
     }
 
@@ -72,14 +78,46 @@ namespace Synkevo {
         KStandardAction::quit(this, SLOT(close()), actionCollection());
 
         // Edit menu
+        m_addProfileAction = new KAction(KIcon(QLatin1String("list-add")), i18nc("@action", "&Add Profile..."), this);
+        m_addProfileAction->setShortcut(Qt::CTRL + Qt::Key_A);
+        m_addProfileAction->setToolTip(i18nc("@action", "Add Sync Partner Profile"));
+        actionCollection()->addAction("add_profile", m_addProfileAction);
 
+        m_removeProfileAction = new KAction(KIcon(QLatin1String("list-remove")), i18nc("@action", "&Remove Profile"), this);
+        m_removeProfileAction->setShortcut(Qt::CTRL + Qt::Key_R);
+        m_removeProfileAction->setToolTip(i18nc("@action", "Remove Sync Partner Profile"));
+        m_removeProfileAction->setEnabled(false);
+        actionCollection()->addAction("remove_profile", m_removeProfileAction);
+
+        m_configureProfileAction = new KAction(KIcon(QLatin1String("configure")), i18nc("@action", "&Configure Profile..."), this);
+        m_configureProfileAction->setShortcut(Qt::CTRL + Qt::Key_C);
+        m_configureProfileAction->setToolTip(i18nc("@action", "Configure Selected Profile..."));
+        m_configureProfileAction->setEnabled(false);
+        actionCollection()->addAction("configure_profile", m_configureProfileAction);
+
+        m_startStopSyncAction = new KAction(KIcon(QLatin1String("media-playback-start")), i18nc("@action", "Start Sync"), this);
+        m_startStopSyncAction->setShortcut(Qt::CTRL + Qt::Key_S);
+        m_startStopSyncAction->setToolTip(i18nc("@action", "Start Sync With Current Partner"));
+        m_startStopSyncAction->setEnabled(false);
+        actionCollection()->addAction("start_stop_sync", m_startStopSyncAction);
 
         // Settings menu
         KStandardAction::preferences(this, SLOT(showPreferences()), actionCollection());
     }
 
-    void MainWindow::setupDockWindows()
+    void MainWindow::setupDockWidgets()
     {
+        // Setup profile dock
+        QDockWidget *profileDock = new QDockWidget(i18nc("@title:window", "Profiles"), this);
+        profileDock->setObjectName("profileDock");
+        QWidget *profileWidget = new ProfileWidget(m_view, this);
+        profileDock->setWidget(profileWidget);
+        //TODO: Connect signals/slots
+        /*connect(profileWidget, SIGNAL(addClicked()), this, SLOT(startGame()));*/
+        profileDock->toggleViewAction()->setText(i18nc("@title:window", "&Profile Dock"));
+        profileDock->toggleViewAction()->setShortcut(Qt::Key_P);
+        actionCollection()->addAction("show_profile_dock", profileDock->toggleViewAction());
+        addDockWidget(Qt::RightDockWidgetArea, profileDock);
     }
 
 } // End of namespace Synkevo

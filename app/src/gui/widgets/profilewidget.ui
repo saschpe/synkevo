@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProfileListWidget</class>
- <widget class="QWidget" name="ProfileListWidget">
+ <class>ProfileWidget</class>
+ <widget class="QWidget" name="ProfileWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>147</width>
+    <height>128</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="margin">
     <number>0</number>
    </property>
-   <item row="0" column="0" rowspan="6" colspan="4">
-    <widget class="KListWidget" name="profileListWidget"/>
-   </item>
-   <item row="0" column="4">
-    <widget class="KPushButton" name="addPartnerButton">
+   <item>
+    <widget class="KPushButton" name="addButton">
      <property name="text">
-      <string>Add Partner</string>
+      <string>&amp;Add Profile...</string>
+     </property>
+     <property name="shortcut">
+      <string>Ctrl+A</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="4">
-    <widget class="KPushButton" name="removePartnerButton">
+   <item>
+    <widget class="KPushButton" name="removeButton">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Remove Partner</string>
+      <string>&amp;Remove Profile</string>
+     </property>
+     <property name="shortcut">
+      <string>Ctrl+R</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="4">
-    <widget class="KPushButton" name="setAsDefaultButton">
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="KPushButton" name="configureButton">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Set as default</string>
+      <string>&amp;Configure Profile...</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0" colspan="4">
-    <widget class="KPushButton" name="startStopButton">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Start Sync</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="4">
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -70,13 +70,16 @@
      </property>
     </spacer>
    </item>
-   <item row="4" column="4">
-    <widget class="KPushButton" name="configureButton">
+   <item>
+    <widget class="KPushButton" name="startStopButton">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Configure</string>
+      <string>Start Sync</string>
+     </property>
+     <property name="shortcut">
+      <string>Ctrl+S</string>
      </property>
     </widget>
    </item>
@@ -84,16 +87,17 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KListWidget</class>
-   <extends>QListWidget</extends>
-   <header>klistwidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>addButton</tabstop>
+  <tabstop>removeButton</tabstop>
+  <tabstop>configureButton</tabstop>
+  <tabstop>startStopButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

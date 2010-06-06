@@ -18,23 +18,42 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "profilelistwidget.h"
-#include "preferences.h"
+#ifndef SYNKEVO_PROFILEWIDGET_H
+#define SYNKEVO_PROFILEWIDGET_H
+
+#include "ui_profilewidget.h"
+
+#include <QPointer>
+#include <QWidget>
+
+class QAbstractItemView;
 
 namespace Synkevo {
 
-    ProfileListWidget::ProfileListWidget(QWidget *parent)
-        : QWidget(parent)
+    class ProfileWidget : public QWidget, private Ui::ProfileWidget
     {
-        setupUi(this);
+        Q_OBJECT
 
-        addPartnerButton->setIcon(KIcon(QLatin1String("list-add")));
-        removePartnerButton->setIcon(KIcon(QLatin1String("list-remove")));
-        setAsDefaultButton->setIcon(KIcon(QLatin1String("")));
-        configureButton->setIcon(KIcon(QLatin1String("configure")));
-        startStopButton->setIcon(KIcon(QLatin1String("media-playback-start")));
-    }
+    public:
+        explicit ProfileWidget(QAbstractItemView *view, QWidget *parent = 0);
+
+    signals:
+        void addClicked();
+        void removeClicked();
+        void configureClicked();
+        void startClicked();
+        void stopClicked();
+
+    private slots:
+        void on_addButton_clicked();
+        void on_removeButton_clicked();
+        void on_configureButton_clicked();
+        void on_startStopButton_clicked();
+
+    private:
+        QPointer<QAbstractItemView> m_view;
+    };
 
 } // End of namespace Synkevo
 
-#include "moc_profilelistwidget.cpp"
+#endif

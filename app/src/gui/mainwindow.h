@@ -26,11 +26,11 @@
 #include <KXmlGuiWindow>
 
 class KAction;
+class QAbstractItemView;
 
 namespace Synkevo {
 
     class StateOverlay;
-    class ProfileListWidget;
 
     class MainWindow : public KXmlGuiWindow
     {
@@ -45,10 +45,15 @@ namespace Synkevo {
     private:
         void initBackend();
         void setupActions();
-        void setupDockWindows();
+        void setupDockWidgets();
 
-        ProfileListWidget *m_profileListWidget;
+        QAbstractItemView *m_view;
         StateOverlay *m_stateOverlay;
+
+        KAction *m_addProfileAction;
+        KAction *m_removeProfileAction;
+        KAction *m_configureProfileAction;
+        KAction *m_startStopSyncAction;
 
         org::syncevolution::Server *m_server;
     };

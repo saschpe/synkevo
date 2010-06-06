@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="syncevo" version="1">
+<gui name="synkevo" version="2">
     <MenuBar>
         <Menu name="file">
             <text context="@title:menu">&amp;File</text>
-            <Separator />
+            <Separator/>
             <Action name="quit"/>
+        </Menu>
+        <Menu name="edit">
+            <text context="@title:menu">&amp;Edit</text>
+            <Action name="add_profile"/>
+            <Action name="remove_profile"/>
+            <Separator/>
+            <Action name="configure_profile"/>
+            <Separator/>
+            <Action name="start_stop_sync"/>
         </Menu>
         <Menu name="settings">
             <text context="@title:menu">&amp;Settings</text>
-            <!-- <Menu name="dockers" append="show_merge" >
-                <text context="@title:menu">&amp;Dockers</text>
-                <Action name="show_setup_panel" />
-                <Action name="show_game_panel" />
-                <Action name="show_moves_panel" />
-            </Menu> -->
+            <Menu name="dockers" append="show_merge">
+                <text context="@title:menu">&amp;Docks Shown</text>
+                <Action name="show_profile_dock"/>
+            </Menu>
         </Menu>
     </MenuBar>
-
-    <ToolBar name="mainToolBar" noMerge="1" iconText="icontextright">
+    <ToolBar name="mainToolBar" noMerge="1">
         <text context="@title:menu">Main Toolbar</text>
-        <Action name="startStopSync" />
+        <Action name="quit"/>
+    </ToolBar>
+    <ToolBar name="editToolbar" noMerge="1">
+        <text context="@title:menu">Edit Toolbar</text>
+        <Action name="add_profile"/>
+        <Action name="remove_profile"/>
+        <Separator/>
+        <Action name="configure_profile"/>
+        <Separator/>
+        <Action name="start_stop_sync"/>
     </ToolBar>
 </gui>
