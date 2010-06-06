@@ -29,7 +29,7 @@ class KAction;
 
 namespace Synkevo {
 
-    class BackendErrorWidget;
+    class StateOverlay;
     class ProfileListWidget;
 
     class MainWindow : public KXmlGuiWindow
@@ -43,12 +43,12 @@ namespace Synkevo {
         void showPreferences();
 
     private:
-        bool initDbus();
+        void initBackend();
         void setupActions();
         void setupDockWindows();
 
         ProfileListWidget *m_profileListWidget;
-        BackendErrorWidget *m_backendErrorWidget;
+        StateOverlay *m_stateOverlay;
 
         org::syncevolution::Server *m_server;
     };

@@ -21,6 +21,7 @@
 #include "mainwindow.h"
 #include "config/generalconfig.h"
 #include "widgets/profilelistwidget.h"
+#include "widgets/stateoverlay.h"
 #include "preferences.h"
 
 #include <KAction>
@@ -33,16 +34,14 @@ namespace Synkevo {
     MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags)
         : KXmlGuiWindow(parent, flags)
         , m_profileListWidget(new ProfileListWidget(this))
+        , m_stateOverlay(new StateOverlay(m_profileListWidget, this))
     {
         setCentralWidget(m_profileListWidget);
 
         setupActions();
         setupDockWindows();
-        setupGUI(QSize(640, 480), KXmlGuiWindow::ToolBar | KXmlGuiWindow::Keys |
-                                  KXmlGuiWindow::Save | KXmlGuiWindow::Create);
-        if (!initDBus()) {
 
-        }
+        initBackend();
     }
 
     void MainWindow::showPreferences()
@@ -57,16 +56,14 @@ namespace Synkevo {
         dialog->show();
     }
 
-    bool MainWindow::initDBus()
+    void MainWindow::initBackend()
     {
         m_server = new org::syncevolution::Server("org.syncevolution",
                                                   "/org/syncevolution/Server",
                                                   QDBusConnection::sessionBus(),
                                                   this);
-        if (!m_server) {
-            return false;
-        }
-        return true;
+        m_stateOverlay->setActive(!m_server);
+        m_stateOverlay->setState(StateOverlay::NotRunning);
     }
 
     void MainWindow::setupActions()
