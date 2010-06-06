@@ -3,6 +3,7 @@
 set(synkevo_SRCS
     src/gui/config/generalconfig.cpp
     src/gui/widgets/profilelistwidget.cpp
+    src/gui/widgets/stateoverlay.cpp
     src/gui/mainwindow.cpp
     src/main.cpp
 )
@@ -10,6 +11,7 @@ set(synkevo_SRCS
 set(synkevo_UIS
     src/gui/config/generalconfig.ui
     src/gui/widgets/profilelistwidget.ui
+    src/gui/widgets/stateoverlay.ui
 )
 
 qt4_add_dbus_interface(synkevo_SRCS ${SyncEvolution_DBUS_SERVER_INTERFACE} server_interface)
