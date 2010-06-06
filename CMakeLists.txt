@@ -16,5 +16,3 @@ include(CheckIncludeFiles)
 include_directories(${QT_INCLUDES} ${KDE4_INCLUDES})
 
 add_subdirectory(app)
-#add_subdirectory(kcm)
-#add_subdirectory(part)
