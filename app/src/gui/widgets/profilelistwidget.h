@@ -40,4 +40,3 @@ namespace Synkevo {
 } // End of namespace Synkevo
 
 #endif
-
