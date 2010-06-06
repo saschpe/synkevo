@@ -21,16 +21,18 @@
 #include "profilelistwidget.h"
 #include "preferences.h"
 
-#include <KDebug>
-#include <KListWidget>
-#include <KPushButton>
-
 namespace Synkevo {
 
     ProfileListWidget::ProfileListWidget(QWidget *parent)
         : QWidget(parent)
     {
         setupUi(this);
+
+        addPartnerButton->setIcon(KIcon(QLatin1String("list-add")));
+        removePartnerButton->setIcon(KIcon(QLatin1String("list-remove")));
+        setAsDefaultButton->setIcon(KIcon(QLatin1String("")));
+        configureButton->setIcon(KIcon(QLatin1String("configure")));
+        startStopButton->setIcon(KIcon(QLatin1String("media-playback-start")));
     }
 
 } // End of namespace Synkevo
