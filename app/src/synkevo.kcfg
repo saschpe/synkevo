@@ -4,4 +4,10 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
                           http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
     <kcfgfile name="synkevorc" />
+    <group name="Global">
+        <entry name="FirstRun" type="Bool">
+            <label></label>
+            <default>true</default>
+        </entry>
+    </group>
 </kcfg>
