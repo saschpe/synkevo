@@ -27,6 +27,7 @@
 
 class KAction;
 class QAbstractItemView;
+class QStandardItemModel;
 
 namespace Synkevo {
 
@@ -47,6 +48,7 @@ namespace Synkevo {
         void setupActions();
         void setupDockWidgets();
 
+        QStandardItemModel *m_model;
         QAbstractItemView *m_view;
         StateOverlay *m_stateOverlay;
 

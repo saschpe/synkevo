@@ -28,16 +28,16 @@
 #include <KActionCollection>
 #include <KConfigDialog>
 #include <KDebug>
-#include <KStandardDirs>
 
 #include <QDockWidget>
+#include <QStandardItemModel>
 #include <QTableView>
 
 namespace Synkevo {
 
     MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags)
         : KXmlGuiWindow(parent, flags)
-        , m_view(new QTableView)
+        , m_model(new QStandardItemModel(this)), m_view(new QTableView(this))
         , m_stateOverlay(new StateOverlay(m_view, this))
     {
         setCentralWidget(m_view);
@@ -67,8 +67,7 @@ namespace Synkevo {
                                                   "/org/syncevolution/Server",
                                                   QDBusConnection::sessionBus(),
                                                   this);
-        //m_stateOverlay->setActive(!m_server);
-        m_stateOverlay->setActive(true);
+        m_stateOverlay->setActive(!m_server);
         m_stateOverlay->setState(StateOverlay::NotRunning);
     }
 
