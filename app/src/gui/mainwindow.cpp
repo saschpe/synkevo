@@ -40,13 +40,16 @@ namespace Synkevo {
         setupDockWindows();
         setupGUI(QSize(640, 480), KXmlGuiWindow::ToolBar | KXmlGuiWindow::Keys |
                                   KXmlGuiWindow::Save | KXmlGuiWindow::Create);
-        init();
+        if (!initDBus()) {
+
+        }
     }
 
     void MainWindow::showPreferences()
     {
-        if (KConfigDialog::showDialog("settings"))
+        if (KConfigDialog::showDialog("settings")) {
             return;
+        }
 
         KConfigDialog *dialog = new KConfigDialog(this, "settings", Preferences::self());
         dialog->addPage(new GeneralConfig(), i18n("General"), "preferences-other");
@@ -54,15 +57,15 @@ namespace Synkevo {
         dialog->show();
     }
 
-    bool MainWindow::init()
+    bool MainWindow::initDBus()
     {
-        /*m_serverInterface = new org::syncevolution::Server("org.syncevolution",
-                                                           "/org/syncevolution/Server",
-                                                           QDBusConnection::sessionBus(),
-                                                           this);
-        if (!m_serverInterface) {
+        m_server = new org::syncevolution::Server("org.syncevolution",
+                                                  "/org/syncevolution/Server",
+                                                  QDBusConnection::sessionBus(),
+                                                  this);
+        if (!m_server) {
             return false;
-        }*/
+        }
         return true;
     }
 
