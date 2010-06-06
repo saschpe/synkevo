@@ -46,6 +46,8 @@ namespace Synkevo {
         setupDockWidgets();
         setupGUI();
 
+        m_view->setModel(m_model);
+
         initBackend();
     }
 
