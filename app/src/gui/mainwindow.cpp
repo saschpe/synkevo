@@ -40,9 +40,10 @@ namespace Synkevo {
     MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags)
         : KXmlGuiWindow(parent, flags)
         , m_model(new QStandardItemModel(this)), m_view(new QTableView(this))
-        , m_stateOverlay(new StateOverlay(m_view, this))
     {
         setCentralWidget(m_view);
+
+        new StateOverlay(m_view, this);
 
         setupActions();
         setupDockWidgets();
@@ -64,7 +65,6 @@ namespace Synkevo {
 
     void MainWindow::addProfile()
     {
-        kDebug();
         QStandardItem *item = new QStandardItem(QString("My Profile"));
         m_model->appendRow(item);
         m_view->setCurrentIndex(m_model->indexFromItem(item));
@@ -74,13 +74,12 @@ namespace Synkevo {
     void MainWindow::removeProfile()
     {
         kDebug();
-
     }
 
     void MainWindow::configureProfile()
     {
         kDebug();
-        ConfigWidget *configWidget = new ConfigWidget(this);
+        ConfigWidget *configWidget = new ConfigWidget(m_server, this);
 
         KDialog *dialog = new KDialog(this);
         dialog->setCaption(i18n("Configure Profile"));
@@ -92,6 +91,9 @@ namespace Synkevo {
     void MainWindow::startSync()
     {
         kDebug();
+        slotStateChanged("busy");
+
+        //m_server->StartSession("new_session");
     }
 
     void MainWindow::stopSync()
@@ -99,8 +101,19 @@ namespace Synkevo {
         kDebug();
     }
 
+    void MainWindow::syncFinished()
+    {
+
+    }
+
+    void MainWindow::syncError()
+    {
+
+    }
+
     void MainWindow::showPreferences()
     {
+        // Show application-wide settings dialog
         if (KConfigDialog::showDialog("settings")) {
             return;
         }
@@ -119,21 +132,6 @@ namespace Synkevo {
             slotStateChanged("has_no_selection");
         }
     }
-
-    /*void MainWindow::getBackendConfigs()
-    {
-
-        QDBusPendingReply<QStringList> reply = m_server->GetConfigs(true);
-        if (reply.isValid()) {
-            kDebug() << "SyncEvolution supports these configs:" << reply.value();
-            slotStateChanged("has_no_selection");
-        } else {
-            kDebug() << "SyncEvolution service error:" << reply.error();
-            slotStateChanged("backend_not_running");
-            m_stateOverlay->setState(StateOverlay::NotRunning);
-            m_stateOverlay->setActive(true);
-        }
-    }*/
 
     void MainWindow::setupActions()
     {

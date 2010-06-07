@@ -20,12 +20,26 @@
 
 #include "configwidget.h"
 
+#include <KDebug>
+
 namespace Synkevo {
 
-    ConfigWidget::ConfigWidget(QWidget *parent)
-        : QWidget(parent)
+    ConfigWidget::ConfigWidget(org::syncevolution::Server *server, QWidget *parent)
+        : QWidget(parent), m_server(server)
     {
+        Q_ASSERT(server);
+
         setupUi(this);
+
+        // Query SyncEvolution service for available configs
+        QDBusPendingReply<QStringList> reply = m_server->GetConfigs(true);
+        if (reply.isValid()) {
+            kDebug() << "SyncEvolution supports these configs:" << reply.value();
+            serviceType->addItems(reply.value());
+        } else {
+            kDebug() << "SyncEvolution service error:" << reply.error();
+            //TODO: Show error/ disable widget
+        }
 
         //TODO: a lot
     }

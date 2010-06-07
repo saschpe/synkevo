@@ -30,8 +30,6 @@ class QTableView;
 
 namespace Synkevo {
 
-    class StateOverlay;
-
     class MainWindow : public KXmlGuiWindow
     {
         Q_OBJECT
@@ -45,6 +43,8 @@ namespace Synkevo {
         void configureProfile();
         void startSync();
         void stopSync();
+        void syncFinished();
+        void syncError();
         void showPreferences();
         void selectionChanged();
 
@@ -54,7 +54,6 @@ namespace Synkevo {
 
         QStandardItemModel *m_model;
         QTableView *m_view;
-        StateOverlay *m_stateOverlay;
 
         org::syncevolution::Server *m_server;
     };

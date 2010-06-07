@@ -22,6 +22,7 @@
 #define SYNKEVO_CONFIGWIDGET_H
 
 #include "ui_configwidget.h"
+#include "server_interface.h"
 
 #include <QWidget>
 
@@ -32,7 +33,10 @@ namespace Synkevo {
         Q_OBJECT
 
     public:
-        explicit ConfigWidget(QWidget *parent = 0);
+        explicit ConfigWidget(org::syncevolution::Server *server, QWidget *parent = 0);
+
+    private:
+        org::syncevolution::Server *m_server;
     };
 
 } // End of namespace Synkevo

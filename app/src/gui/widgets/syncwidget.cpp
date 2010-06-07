@@ -25,6 +25,8 @@ namespace Synkevo {
     SyncWidget::SyncWidget(QAbstractItemView *model, QWidget *parent)
         : QWidget(parent), m_view(model)
     {
+        Q_ASSERT(model);
+
         setupUi(this);
 
         startStopButton->setIcon(KIcon(QLatin1String("media-playback-start")));
