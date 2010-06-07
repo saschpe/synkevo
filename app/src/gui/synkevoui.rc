@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="synkevo" version="4">
+<gui name="synkevo"
+     version="5"
+     xmlns="http://www.kde.org/standards/kxmlgui/1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.kde.org/standards/kxmlgui/1.0
+                         http://www.kde.org/standards/kxmlgui/1.0/kxmlgui.xsd" >
     <MenuBar>
         <Menu name="file">
             <text context="@title:menu">&amp;File</text>
@@ -11,30 +16,54 @@
             <text context="@title:menu">&amp;Edit</text>
             <Action name="add_profile"/>
             <Action name="remove_profile"/>
-            <Separator/>
             <Action name="configure_profile"/>
             <Separator/>
             <Action name="start_stop_sync"/>
         </Menu>
         <Menu name="settings">
             <text context="@title:menu">&amp;Settings</text>
-            <Menu name="dock_widgets" append="show_merge">
-                <text context="@title:menu">&amp;Dock Widgets Shown</text>
+            <Menu name="dockers" append="show_merge">
+                <text context="@title:menu">&amp;Dockers Shown</text>
                 <Action name="show_profile_dock"/>
             </Menu>
         </Menu>
     </MenuBar>
     <ToolBar name="mainToolBar" noMerge="1">
         <text context="@title:menu">Main Toolbar</text>
-        <Action name="quit"/>
-    </ToolBar>
-    <ToolBar name="editToolbar" noMerge="1">
-        <text context="@title:menu">Edit Toolbar</text>
         <Action name="add_profile"/>
         <Action name="remove_profile"/>
-        <Separator/>
         <Action name="configure_profile"/>
         <Separator/>
         <Action name="start_stop_sync"/>
     </ToolBar>
+    <State name="has_no_selection">
+        <enable>
+            <Action name="add_profile"/>
+        </enable>
+        <disable>
+            <Action name="remove_profile"/>
+            <Action name="configure_profile"/>
+            <Action name="start_stop_sync"/>
+        </disable>
+    </State>
+    <State name="has_selection">
+        <enable>
+            <Action name="add_profile"/>
+            <Action name="remove_profile"/>
+            <Action name="configure_profile"/>
+            <Action name="start_stop_sync"/>
+        </enable>
+        <disable>
+        </disable>
+    </State>
+    <State name="busy">
+        <enable>
+            <Action name="start_stop_sync"/>
+        </enable>
+        <disable>
+            <Action name="add_profile"/>
+            <Action name="remove_profile"/>
+            <Action name="configure_profile"/>
+        </disable>
+    </State>
 </gui>
