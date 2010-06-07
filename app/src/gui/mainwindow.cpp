@@ -140,32 +140,33 @@ namespace Synkevo {
         // File menu
         KStandardAction::quit(this, SLOT(close()), actionCollection());
 
+        // Edit menu
         KAction *action = new KAction(KIcon(QLatin1String("list-add")), i18nc("@action", "&Add Profile..."), this);
         action->setShortcut(Qt::CTRL + Qt::Key_A);
         action->setToolTip(i18nc("@action", "Add Service or Device Profile"));
         actionCollection()->addAction("add_profile", action);
         connect(action, SIGNAL(triggered()), this, SLOT(addProfile()));
 
-        action= new KAction(KIcon(QLatin1String("list-remove")), i18nc("@action", "&Remove Profile"), this);
+        action = new KAction(KIcon(QLatin1String("list-remove")), i18nc("@action", "&Remove Profile"), this);
         action->setShortcut(Qt::CTRL + Qt::Key_R);
         action->setToolTip(i18nc("@action", "Remove Service or Device Profile"));
         action->setEnabled(false);
         actionCollection()->addAction("remove_profile", action);
         connect(action, SIGNAL(triggered()), this, SLOT(removeProfile()));
 
-        action= new KAction(KIcon(QLatin1String("configure")), i18nc("@action", "&Configure Profile..."), this);
+        action = new KAction(KIcon(QLatin1String("configure")), i18nc("@action", "&Configure Profile..."), this);
         action->setShortcut(Qt::CTRL + Qt::Key_C);
         action->setToolTip(i18nc("@action", "Configure Selected Service or Device Profile..."));
         action->setEnabled(false);
         actionCollection()->addAction("configure_profile", action);
         connect(action, SIGNAL(triggered()), this, SLOT(configureProfile()));
 
-        /*m_startStopSyncAction = new KAction(KIcon(QLatin1String("media-playback-start")), i18nc("@action", "Start Sync"), this);
-        m_startStopSyncAction->setShortcut(Qt::CTRL + Qt::Key_S);
-        m_startStopSyncAction->setToolTip(i18nc("@action", "Sync With Current Service or Device"));
-        m_startStopSyncAction->setEnabled(false);
-        actionCollection()->addAction("start_stop_sync", m_startStopSyncAction);
-        connect(m_startStopSyncAction, SIGNAL(triggered()), this, SLOT(startStopSync()));*/
+        /*action = new KAction(KIcon(QLatin1String("media-playback-start")), i18nc("@action", "Start Sync"), this);
+        action->setShortcut(Qt::CTRL + Qt::Key_S);
+        action->setToolTip(i18nc("@action", "Sync With Current Service or Device"));
+        action->setEnabled(false);
+        actionCollection()->addAction("start_stop_sync", action);
+        connect(action, SIGNAL(triggered()), this, SLOT(startStopSync()));*/
 
         // Settings menu
         KStandardAction::preferences(this, SLOT(showPreferences()), actionCollection());
