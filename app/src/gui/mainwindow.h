@@ -25,9 +25,8 @@
 
 #include <KXmlGuiWindow>
 
-class KAction;
-class QAbstractItemView;
 class QStandardItemModel;
+class QTableView;
 
 namespace Synkevo {
 
@@ -41,21 +40,21 @@ namespace Synkevo {
         explicit MainWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
 
     private slots:
+        void addProfile();
+        void removeProfile();
+        void configureProfile();
+        void startSync();
+        void stopSync();
         void showPreferences();
+        void selectionChanged();
 
     private:
-        void initBackend();
         void setupActions();
         void setupDockWidgets();
 
         QStandardItemModel *m_model;
-        QAbstractItemView *m_view;
+        QTableView *m_view;
         StateOverlay *m_stateOverlay;
-
-        KAction *m_addProfileAction;
-        KAction *m_removeProfileAction;
-        KAction *m_configureProfileAction;
-        KAction *m_startStopSyncAction;
 
         org::syncevolution::Server *m_server;
     };

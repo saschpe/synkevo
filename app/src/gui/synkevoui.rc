@@ -24,7 +24,7 @@
             <text context="@title:menu">&amp;Settings</text>
             <Menu name="dockers" append="show_merge">
                 <text context="@title:menu">&amp;Dockers Shown</text>
-                <Action name="show_profile_dock"/>
+                <Action name="show_sync_dock"/>
             </Menu>
         </Menu>
     </MenuBar>
@@ -53,14 +53,20 @@
             <Action name="configure_profile"/>
             <Action name="start_stop_sync"/>
         </enable>
-        <disable>
-        </disable>
     </State>
     <State name="busy">
         <enable>
             <Action name="start_stop_sync"/>
         </enable>
         <disable>
+            <Action name="add_profile"/>
+            <Action name="remove_profile"/>
+            <Action name="configure_profile"/>
+        </disable>
+    </State>
+    <State name="backend_error">
+        <disable>
+            <Action name="start_stop_sync"/>
             <Action name="add_profile"/>
             <Action name="remove_profile"/>
             <Action name="configure_profile"/>

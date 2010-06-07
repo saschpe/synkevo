@@ -20,8 +20,10 @@
 
 #include "mainwindow.h"
 #include "config/generalconfig.h"
+#include "widgets/configwidget.h"
 #include "widgets/profilewidget.h"
 #include "widgets/stateoverlay.h"
+#include "widgets/syncwidget.h"
 #include "preferences.h"
 
 #include <KAction>
@@ -44,15 +46,57 @@ namespace Synkevo {
 
         setupActions();
         setupDockWidgets();
-        setupGUI();
+        setupGUI(QSize(640, 480));
 
         m_view->setAlternatingRowColors(true);
         m_view->setIconSize(QSize(64, 64));
         m_view->setModel(m_model);
         m_view->setSelectionBehavior(QAbstractItemView::SelectItems);
         m_view->setSelectionMode(QAbstractItemView::SingleSelection);
+        m_view->setSortingEnabled(true);
+        connect(m_view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(selectionChanged()));
 
-        initBackend();
+        m_server = new org::syncevolution::Server("org.syncevolution",
+                                                  "/org/syncevolution/Server",
+                                                  QDBusConnection::sessionBus(),
+                                                  this);
+    }
+
+    void MainWindow::addProfile()
+    {
+        kDebug();
+        QStandardItem *item = new QStandardItem(QString("My Profile"));
+        m_model->appendRow(item);
+        m_view->setCurrentIndex(m_model->indexFromItem(item));
+        configureProfile();
+    }
+
+    void MainWindow::removeProfile()
+    {
+        kDebug();
+
+    }
+
+    void MainWindow::configureProfile()
+    {
+        kDebug();
+        ConfigWidget *configWidget = new ConfigWidget(this);
+
+        KDialog *dialog = new KDialog(this);
+        dialog->setCaption(i18n("Configure Profile"));
+        dialog->setButtons(KDialog::Default | KDialog::Ok | KDialog::Cancel | KDialog::Apply);
+        dialog->setMainWidget(configWidget);
+        dialog->show();
+    }
+
+    void MainWindow::startSync()
+    {
+        kDebug();
+    }
+
+    void MainWindow::stopSync()
+    {
+        kDebug();
     }
 
     void MainWindow::showPreferences()
@@ -67,48 +111,61 @@ namespace Synkevo {
         dialog->show();
     }
 
-    void MainWindow::initBackend()
+    void MainWindow::selectionChanged()
     {
-        kDebug() << "init SyncML backend";
-        m_server = new org::syncevolution::Server("org.syncevolution",
-                                                  "/org/syncevolution/Server",
-                                                  QDBusConnection::sessionBus(),
-                                                  this);
-
-        QStringList configs = m_server->GetConfigs(true);
-
-        m_stateOverlay->setActive(!m_server);
-        m_stateOverlay->setState(StateOverlay::NotRunning);
+        if (m_view->selectionModel()->hasSelection()) {
+            slotStateChanged("has_selection");
+        } else {
+            slotStateChanged("has_no_selection");
+        }
     }
+
+    /*void MainWindow::getBackendConfigs()
+    {
+
+        QDBusPendingReply<QStringList> reply = m_server->GetConfigs(true);
+        if (reply.isValid()) {
+            kDebug() << "SyncEvolution supports these configs:" << reply.value();
+            slotStateChanged("has_no_selection");
+        } else {
+            kDebug() << "SyncEvolution service error:" << reply.error();
+            slotStateChanged("backend_not_running");
+            m_stateOverlay->setState(StateOverlay::NotRunning);
+            m_stateOverlay->setActive(true);
+        }
+    }*/
 
     void MainWindow::setupActions()
     {
         // File menu
         KStandardAction::quit(this, SLOT(close()), actionCollection());
 
-        // Edit menu
-        m_addProfileAction = new KAction(KIcon(QLatin1String("list-add")), i18nc("@action", "&Add Profile..."), this);
-        m_addProfileAction->setShortcut(Qt::CTRL + Qt::Key_A);
-        m_addProfileAction->setToolTip(i18nc("@action", "Add Sync Partner Profile"));
-        actionCollection()->addAction("add_profile", m_addProfileAction);
+        KAction *action = new KAction(KIcon(QLatin1String("list-add")), i18nc("@action", "&Add Profile..."), this);
+        action->setShortcut(Qt::CTRL + Qt::Key_A);
+        action->setToolTip(i18nc("@action", "Add Service or Device Profile"));
+        actionCollection()->addAction("add_profile", action);
+        connect(action, SIGNAL(triggered()), this, SLOT(addProfile()));
 
-        m_removeProfileAction = new KAction(KIcon(QLatin1String("list-remove")), i18nc("@action", "&Remove Profile"), this);
-        m_removeProfileAction->setShortcut(Qt::CTRL + Qt::Key_R);
-        m_removeProfileAction->setToolTip(i18nc("@action", "Remove Sync Partner Profile"));
-        m_removeProfileAction->setEnabled(false);
-        actionCollection()->addAction("remove_profile", m_removeProfileAction);
+        action= new KAction(KIcon(QLatin1String("list-remove")), i18nc("@action", "&Remove Profile"), this);
+        action->setShortcut(Qt::CTRL + Qt::Key_R);
+        action->setToolTip(i18nc("@action", "Remove Service or Device Profile"));
+        action->setEnabled(false);
+        actionCollection()->addAction("remove_profile", action);
+        connect(action, SIGNAL(triggered()), this, SLOT(removeProfile()));
 
-        m_configureProfileAction = new KAction(KIcon(QLatin1String("configure")), i18nc("@action", "&Configure Profile..."), this);
-        m_configureProfileAction->setShortcut(Qt::CTRL + Qt::Key_C);
-        m_configureProfileAction->setToolTip(i18nc("@action", "Configure Selected Profile..."));
-        m_configureProfileAction->setEnabled(false);
-        actionCollection()->addAction("configure_profile", m_configureProfileAction);
+        action= new KAction(KIcon(QLatin1String("configure")), i18nc("@action", "&Configure Profile..."), this);
+        action->setShortcut(Qt::CTRL + Qt::Key_C);
+        action->setToolTip(i18nc("@action", "Configure Selected Service or Device Profile..."));
+        action->setEnabled(false);
+        actionCollection()->addAction("configure_profile", action);
+        connect(action, SIGNAL(triggered()), this, SLOT(configureProfile()));
 
-        m_startStopSyncAction = new KAction(KIcon(QLatin1String("media-playback-start")), i18nc("@action", "Start Sync"), this);
+        /*m_startStopSyncAction = new KAction(KIcon(QLatin1String("media-playback-start")), i18nc("@action", "Start Sync"), this);
         m_startStopSyncAction->setShortcut(Qt::CTRL + Qt::Key_S);
-        m_startStopSyncAction->setToolTip(i18nc("@action", "Start Sync With Current Partner"));
+        m_startStopSyncAction->setToolTip(i18nc("@action", "Sync With Current Service or Device"));
         m_startStopSyncAction->setEnabled(false);
         actionCollection()->addAction("start_stop_sync", m_startStopSyncAction);
+        connect(m_startStopSyncAction, SIGNAL(triggered()), this, SLOT(startStopSync()));*/
 
         // Settings menu
         KStandardAction::preferences(this, SLOT(showPreferences()), actionCollection());
@@ -116,18 +173,20 @@ namespace Synkevo {
 
     void MainWindow::setupDockWidgets()
     {
-        // Setup profile dock
-        QDockWidget *profileDock = new QDockWidget(i18nc("@title:window", "Profiles"), this);
-        profileDock->setObjectName("profileDock");
-        QWidget *profileWidget = new ProfileWidget(m_view, this);
-        profileDock->setWidget(profileWidget);
-        //TODO: Connect signals/slots
-        /*connect(profileWidget, SIGNAL(addClicked()), this, SLOT(startGame()));*/
-        profileDock->toggleViewAction()->setText(i18nc("@title:window", "&Profile Dock"));
-        profileDock->toggleViewAction()->setShortcut(Qt::Key_P);
-        profileDock->hide();
-        actionCollection()->addAction("show_profile_dock", profileDock->toggleViewAction());
-        addDockWidget(Qt::RightDockWidgetArea, profileDock);
+        QWidget *syncWidget = new SyncWidget(m_view, this);
+        syncWidget->setObjectName("sync_widget");
+        connect(syncWidget, SIGNAL(startClicked()), this, SLOT(startSync()));
+        connect(syncWidget, SIGNAL(stopClicked()), this, SLOT(stopSync()));
+
+        QDockWidget *syncDock = new QDockWidget(i18nc("@title:window", "Sync"), this);
+        syncDock->setObjectName("sync_dock");
+        syncDock->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
+        syncDock->setFeatures(QDockWidget::DockWidgetMovable);
+        syncDock->setWidget(syncWidget);
+        syncDock->toggleViewAction()->setText(i18nc("@title:window", "&Sync Dock"));
+        syncDock->toggleViewAction()->setShortcut(Qt::Key_P);
+        actionCollection()->addAction("show_sync_dock", syncDock->toggleViewAction());
+        addDockWidget(Qt::BottomDockWidgetArea, syncDock);
     }
 
 } // End of namespace Synkevo

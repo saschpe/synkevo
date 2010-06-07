@@ -2,16 +2,18 @@
 
 set(synkevo_SRCS
     src/gui/config/generalconfig.cpp
-    src/gui/widgets/profilewidget.cpp
+    src/gui/widgets/configwidget.cpp
     src/gui/widgets/stateoverlay.cpp
+    src/gui/widgets/syncwidget.cpp
     src/gui/mainwindow.cpp
     src/main.cpp
 )
 
 set(synkevo_UIS
     src/gui/config/generalconfig.ui
-    src/gui/widgets/profilewidget.ui
+    src/gui/widgets/configwidget.ui
     src/gui/widgets/stateoverlay.ui
+    src/gui/widgets/syncwidget.ui
 )
 
 qt4_add_dbus_interface(synkevo_SRCS ${SyncEvolution_DBUS_SERVER_INTERFACE} server_interface)
@@ -23,7 +25,7 @@ kde4_add_kcfg_files(synkevo_SRCS src/preferences.kcfgc)
 kde4_add_app_icon(synkevo_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-synkevo.png")
 kde4_add_executable(synkevo ${synkevo_SRCS})
 
-target_link_libraries(synkevo ${KDE4_KDEUI_LIBS})
+target_link_libraries(synkevo ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS})
 
 install(TARGETS synkevo ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES src/synkevo.kcfg DESTINATION ${KCFG_INSTALL_DIR})
