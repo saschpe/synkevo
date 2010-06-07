@@ -46,7 +46,11 @@ namespace Synkevo {
         setupDockWidgets();
         setupGUI();
 
+        m_view->setAlternatingRowColors(true);
+        m_view->setIconSize(QSize(64, 64));
         m_view->setModel(m_model);
+        m_view->setSelectionBehavior(QAbstractItemView::SelectItems);
+        m_view->setSelectionMode(QAbstractItemView::SingleSelection);
 
         initBackend();
     }
@@ -65,10 +69,14 @@ namespace Synkevo {
 
     void MainWindow::initBackend()
     {
+        kDebug() << "init SyncML backend";
         m_server = new org::syncevolution::Server("org.syncevolution",
                                                   "/org/syncevolution/Server",
                                                   QDBusConnection::sessionBus(),
                                                   this);
+
+        QStringList configs = m_server->GetConfigs(true);
+
         m_stateOverlay->setActive(!m_server);
         m_stateOverlay->setState(StateOverlay::NotRunning);
     }
@@ -117,6 +125,7 @@ namespace Synkevo {
         /*connect(profileWidget, SIGNAL(addClicked()), this, SLOT(startGame()));*/
         profileDock->toggleViewAction()->setText(i18nc("@title:window", "&Profile Dock"));
         profileDock->toggleViewAction()->setShortcut(Qt::Key_P);
+        profileDock->hide();
         actionCollection()->addAction("show_profile_dock", profileDock->toggleViewAction());
         addDockWidget(Qt::RightDockWidgetArea, profileDock);
     }
