@@ -28,11 +28,9 @@ namespace Synkevo {
         setupUi(this);
 
         startStopButton->setIcon(KIcon(QLatin1String("media-playback-start")));
-
         //TODO: react on model changes and enable/disable sync button
         //TODO: changes combos
         connect(m_view->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(selectionChanged()));
-
     }
 
     void SyncWidget::on_startStopButton_clicked()
